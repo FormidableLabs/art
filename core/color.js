@@ -88,6 +88,7 @@ var limit = function(number, min, max){
 var listMatch = /([-.\d]+\%?)\s*,\s*([-.\d]+\%?)\s*,\s*([-.\d]+\%?)\s*,?\s*([-.\d]*\%?)/;
 var hexMatch = /^#?([a-f0-9]{1,2})([a-f0-9]{1,2})([a-f0-9]{1,2})([a-f0-9]{0,2})$/i;
 var defaultColorArray = ["00", "00", "00", ""];  // black
+var transparentColorArray = ["00", "00", "00", "00"];
 
 Color.parseRGB = function(color){
 	// if a color is not matched, fall back to black
@@ -100,8 +101,10 @@ Color.parseRGB = function(color){
 
 Color.parseHEX = function(color){
 	if (color.length == 1) color = color + color + color;
+	var colorArray
+	if (color === 'transparent' || color === 'none') colorArray = transparentColorArray;
 	// if a color is not matched, fall back to black
-	var colorArray = color.match(hexMatch) ? color.match(hexMatch).slice(1) : defaultColorArray;
+	else colorArray = color.match(hexMatch) ? color.match(hexMatch).slice(1) : defaultColorArray;
 	var result = map(colorArray, function(bit, i){
 		if (i == 3) return (bit) ? parseInt(bit, 16) / 255 : 1;
 		return parseInt((bit.length == 1) ? bit + bit : bit, 16);
