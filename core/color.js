@@ -102,8 +102,10 @@ Color.parseRGB = function(color){
 };
 
 Color.parseHEX = function(color){
+	console.log(color);
 	if (color === "transparent" || color ==="none") {
-		return null;
+		console.log("whhhat?")
+		return undefined;
 	}
 	if (color.length == 1) color = color + color + color;
 	// if a color is not matched, fall back to black
@@ -116,6 +118,7 @@ Color.parseHEX = function(color){
 
 Color.parseHSB = function(color){
 	if (color === "transparent" || color ==="none") {
+		console.log
 		return null;
 	}
 	// if a color is not matched, fall back to black
