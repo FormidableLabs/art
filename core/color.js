@@ -90,8 +90,6 @@ var hexMatch = /^#?([a-f0-9]{1,2})([a-f0-9]{1,2})([a-f0-9]{1,2})([a-f0-9]{0,2})$
 var defaultColorArray = ["00", "00", "00", ""];  // black
 
 Color.parseRGB = function(color){
-	// handle 'transparent' and 'none' color properties
-	if (color === 'transparent' || 'none') return [];
 	// if a color is not matched, fall back to black
 	var colorArray = color.match(listMatch) ? color.match(listMatch).slice(1) : defaultColorArray;
 	return map(colorArray, function(bit, i){
@@ -102,19 +100,17 @@ Color.parseRGB = function(color){
 
 Color.parseHEX = function(color){
 	if (color.length == 1) color = color + color + color;
-	// handle 'transparent' and 'none' color properties
-	if (color === 'transparent' || 'none') return [];
 	// if a color is not matched, fall back to black
 	var colorArray = color.match(hexMatch) ? color.match(hexMatch).slice(1) : defaultColorArray;
-	return map(colorArray, function(bit, i){
+	var result = map(colorArray, function(bit, i){
 		if (i == 3) return (bit) ? parseInt(bit, 16) / 255 : 1;
 		return parseInt((bit.length == 1) ? bit + bit : bit, 16);
 	});
+	console.log(result);
+	return result;
 };
 
 Color.parseHSB = function(color){
-	// handle 'transparent' and 'none' color properties
-	if (color === 'transparent' || 'none') return [];
 	// if a color is not matched, fall back to black
 	var colorArray = color.match(listMatch) ? color.match(listMatch).slice(1) : defaultColorArray;
 	var hsb = map(colorArray, function(bit, i){
@@ -145,8 +141,6 @@ Color.parseHSB = function(color){
 };
 
 Color.parseHSL = function(color){
-	// handle 'transparent' and 'none' color properties
-	if (color === 'transparent' || 'none') return [];
 	// if a color is not matched, fall back to black
 	var colorArray = color.match(listMatch) ? color.match(listMatch).slice(1) : defaultColorArray;
 	var hsb = map(colorArray, function(bit, i){
